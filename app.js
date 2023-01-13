@@ -22,7 +22,8 @@ passport.use(
       callbackURL: "/auth/google/callback",
       clientID:
         "106185643281-8i7m5smek0kt5o8kj4jge8il7dtg0d6m.apps.googleusercontent.com",
-      clientSecret: "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",
+
+      clientSecret: "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",
     },
     () => {
       //test
@@ -48,11 +49,17 @@ app.get(
 
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google"),
+  passport.authenticate("google", {
+    failureRedirect: "/failure",
+    successRedirect: "/",
+  }),
   (req, res) => {
-    res.send("your reached the call url");
+    console.log("Google call us back!");
   }
 );
+app.get("/failure", (req, res) => {
+  return res.send("Fail to login!");
+});
 
 //!--------------
 
