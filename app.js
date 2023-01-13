@@ -19,7 +19,7 @@ function verifyCallback(accessToken, refreshToken, profile, done) {
 passport.use(
   new Strategy(
     {
-      callbackURL: "/auth/google/success",
+      callbackURL: "/auth/google/callback",
       clientID:
         "106185643281-8i7m5smek0kt5o8kj4jge8il7dtg0d6m.apps.googleusercontent.com",
       clientSecret: "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",
@@ -46,9 +46,13 @@ app.get(
   })
 );
 
-app.get("/auth/google/success", (req, res) => {
-  res.send("your reached the call url");
-});
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    res.send("your reached the call url");
+  }
+);
 
 //!--------------
 
